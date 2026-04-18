@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — VOIDLOG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a080f; --bg2: #120e1c; --bg3: #1a1428;
+    --surface: #1e1830; --surface2: #251f3a;
+    --border: #2e2650; --border2: #3d3368;
+    --purple: #a855f7; --purple2: #7c3aed; --purple3: #c084fc; --purple-dim: #6b21a8;
+    --accent: #e879f9; --accent2: #f0abfc;
+    --text: #f1eef9; --text2: #c4b8e8; --text3: #8b7db0; --text4: #5c5180;
+    --film: #a78bfa; --tv: #60a5fa; --games: #34d399; --books: #f59e0b; --tech: #f472b6;
+    --scanline: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(168,85,247,0.015) 2px, rgba(168,85,247,0.015) 4px);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; font-size: 18px; line-height: 1.7; min-height: 100vh; background-image: var(--scanline); }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+  a { color: var(--purple3); text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  header { position: sticky; top: 0; z-index: 100; background: rgba(10,8,15,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+  .header-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 2rem; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.15em; color: var(--text); }
+  .logo span { color: var(--purple); }
+  .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: var(--text3); letter-spacing: 0.3em; display: block; margin-top: -6px; text-transform: uppercase; }
+  nav { display: flex; gap: 0.25rem; }
+  nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 4px; border: 1px solid transparent; transition: all 0.2s; }
+  nav a:hover, nav a.active { color: var(--purple3); border-color: var(--border2); background: var(--surface); }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .search-box { display: flex; align-items: center; gap: 0.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.75rem; }
+  .search-box input { background: none; border: none; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text2); width: 160px; }
+  .search-box input::placeholder { color: var(--text4); }
+  .search-icon { color: var(--text4); font-size: 0.9rem; }
+
+  .page-wrap { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem; position: relative; z-index: 1; }
+
+  .page-header { margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+  .page-header-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .page-header-label::before { content: '▶'; font-size: 0.5rem; }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.06em; color: var(--text); line-height: 1; margin-bottom: 0.5rem; }
+  .page-desc { font-size: 1rem; color: var(--text3); font-style: italic; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 320px; gap: 2.5rem; align-items: start; }
+
+  /* BIO SECTION */
+  .bio-section { }
+  .bio-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.75rem; }
+  .bio-banner { height: 120px; background: linear-gradient(135deg, var(--bg3), rgba(124,58,237,0.25), rgba(232,121,249,0.1)); border-bottom: 1px solid var(--border); position: relative; display: flex; align-items: flex-end; padding: 1.25rem 1.75rem; }
+  .bio-banner::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(168,85,247,0.15) 0%, transparent 70%); pointer-events: none; }
+  .bio-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--purple2), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: white; border: 3px solid var(--bg2); box-shadow: 0 0 24px rgba(168,85,247,0.4); position: absolute; bottom: -20px; left: 1.75rem; z-index: 2; }
+  .bio-body { padding: 1.75rem 1.75rem 1.5rem; padding-top: 2.25rem; }
+  .bio-name { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.08em; color: var(--text); line-height: 1; margin-bottom: 0.2rem; }
+  .bio-handle { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--purple3); letter-spacing: 0.1em; margin-bottom: 1.25rem; }
+  .bio-text { font-size: 1.05rem; color: var(--text2); line-height: 1.75; margin-bottom: 1.25rem; }
+  .bio-text p + p { margin-top: 0.75rem; }
+  .bio-tags-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .interest-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 4px; border: 1px solid var(--border2); color: var(--text3); background: var(--surface); }
+  .social-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .social-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text3); border: 1px solid var(--border); padding: 0.35rem 0.8rem; border-radius: 5px; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.08em; }
+  .social-btn:hover { color: var(--purple3); border-color: var(--border2); background: var(--surface); }
+
+  /* Q&A */
+  .qa-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.75rem; }
+  .qa-header { padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text3); }
+  .qa-item { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .qa-item:last-child { border-bottom: none; }
+  .qa-q { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple3); margin-bottom: 0.4rem; }
+  .qa-a { font-size: 0.95rem; color: var(--text2); font-style: italic; }
+
+  /* CONTACT */
+  .contact-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .contact-header { padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text3); }
+  .contact-body { padding: 1.25rem 1.5rem; }
+  .contact-body p { font-size: 0.95rem; color: var(--text3); font-style: italic; margin-bottom: 1rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.6rem; }
+  .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.9rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s; cursor: pointer; }
+  .contact-link:hover { border-color: var(--border2); background: var(--bg3); }
+  .contact-link-label { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text2); letter-spacing: 0.1em; text-transform: uppercase; }
+  .contact-link-arrow { color: var(--text4); font-size: 0.75rem; }
+
+  /* SIDEBAR */
+  .about-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+  .widget { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .widget-header { padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--surface); }
+  .widget-title { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text3); display: flex; align-items: center; gap: 0.5rem; }
+  .widget-body { padding: 1rem 1.25rem; }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .stat-cell { background: var(--surface); border-radius: 6px; padding: 0.75rem; text-align: center; border: 1px solid var(--border); }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; color: var(--purple3); }
+  .stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text4); margin-top: 0.2rem; }
+
+  /* CURRENTLY */
+  .currently-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+  .currently-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .currently-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .currently-info { flex: 1; min-width: 0; }
+  .currently-type { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text4); margin-bottom: 0.15rem; }
+  .currently-title { font-size: 0.9rem; font-weight: 600; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .currently-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text4); margin-top: 0.1rem; }
+  .currently-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.12rem 0.4rem; border-radius: 3px; flex-shrink: 0; align-self: center; margin-top: 0; }
+  .badge-playing { background: rgba(52,211,153,0.15); color: var(--games); border: 1px solid rgba(52,211,153,0.3); }
+  .badge-watching { background: rgba(96,165,250,0.15); color: var(--tv); border: 1px solid rgba(96,165,250,0.3); }
+  .badge-reading { background: rgba(245,158,11,0.15); color: var(--books); border: 1px solid rgba(245,158,11,0.3); }
+
+  /* YEAR BREAKDOWN */
+  .year-bar-item { margin-bottom: 0.7rem; }
+  .year-bar-item:last-child { margin-bottom: 0; }
+  .year-bar-label { display: flex; justify-content: space-between; margin-bottom: 0.3rem; }
+  .year-bar-name { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; }
+  .year-bar-val { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text4); }
+  .year-bar-track { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .year-bar-fill { height: 100%; border-radius: 2px; }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text4); letter-spacing: 0.1em; position: relative; z-index: 1; }
+  footer span { color: var(--purple); }
+
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .search-box { display: none; }
+    nav a { padding: 0.3rem 0.4rem; }
+    .page-title { font-size: 2.2rem; }
+    .page-wrap { padding: 1.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="blog.html" class="logo">
+      <span>VOIDLOG</span>
+      <span class="logo-sub">Gaming &amp; Media Journal</span>
+    </a>
+    <nav>
+      <a href="blog.html">Home</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="lists.html">Lists</a>
+      <a href="about.html" class="active">About</a>
+    </nav>
+    <div class="header-right">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" placeholder="Search...">
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-header-label">The person behind the backlog</div>
+    <div class="page-title">About</div>
+    <p class="page-desc">Who I am, what I'm into, and why I bother writing any of this down.</p>
+  </div>
+
+  <div class="about-grid">
+
+    <!-- LEFT: BIO -->
+    <div class="bio-section">
+
+      <div class="bio-card">
+        <div class="bio-banner">
+          <div class="bio-avatar">VX</div>
+        </div>
+        <div class="bio-body">
+          <div class="bio-name">VOID.EXE</div>
+          <div class="bio-handle">@voidlog · Loughborough, UK</div>
+          <div class="bio-text">
+            <p>Somewhere in the English Midlands, slowly working through a backlog that grows faster than I can play it. I've been a gamer since the SNES era and a film obsessive since the first time I watched Alien and couldn't sleep for a week.</p>
+            <p>VOIDLOG is my little corner of the internet — a place to process what I've been watching, playing, reading, and listening to. I'm not a professional critic, just someone with opinions who finds that writing helps them actually remember what they thought.</p>
+            <p>Particular weaknesses: FromSoftware games, Denis Villeneuve films, sci-fi novels with ideas too big for their own good, and any TV show willing to take its time.</p>
+          </div>
+          <div class="bio-tags-row">
+            <span class="interest-tag">Games</span>
+            <span class="interest-tag">Sci-Fi</span>
+            <span class="interest-tag">Horror</span>
+            <span class="interest-tag">Metroidvanias</span>
+            <span class="interest-tag">Slow Cinema</span>
+            <span class="interest-tag">Post-Rock</span>
+            <span class="interest-tag">Hard Sci-Fi</span>
+            <span class="interest-tag">Spy Thrillers</span>
+          </div>
+          <div class="social-row">
+            <a href="#" class="social-btn">Letterboxd ↗</a>
+            <a href="#" class="social-btn">Backloggd ↗</a>
+            <a href="#" class="social-btn">Trakt ↗</a>
+            <a href="#" class="social-btn">RSS ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-section">
+        <div class="qa-header">◈ &nbsp;Frequently Asked</div>
+        <div class="qa-item">
+          <div class="qa-q">How do you score things?</div>
+          <div class="qa-a">1–10, no decimals on the final score. 7 is genuinely good, not a disappointment. 10s are rare and mean something. I've never given a 1 because I stop watching things I hate.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q">Do you play on PC or console?</div>
+          <div class="qa-a">Primarily PC, but I keep a PS5 around for exclusives. I am congenitally incapable of walking past a Steam sale without buying something I won't play for two years.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q">What are your all-time top 3 games?</div>
+          <div class="qa-a">Elden Ring, Dark Souls 3, and — controversially — Outer Wilds. These are not negotiable. Ask me again in six months and they'll be the same.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q">How often do you post?</div>
+          <div class="qa-a">Irregularly, honestly. Whenever I finish something and have enough to say. No schedule, no editorial calendar — just whenever the mood takes me.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q">Can I recommend something to you?</div>
+          <div class="qa-a">Please do. I'm always looking for the next thing, especially obscure sci-fi novels and indie games that flew under the radar. The contact form below is open.</div>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <div class="contact-header">◈ &nbsp;Get In Touch</div>
+        <div class="contact-body">
+          <p>Got a recommendation, a disagreement, or just want to chat about games and films? I'm always happy to hear from people with good taste (or bad taste, if argued well).</p>
+          <div class="contact-links">
+            <a href="#" class="contact-link">
+              <span class="contact-link-label">Send a message</span>
+              <span class="contact-link-arrow">↗</span>
+            </a>
+            <a href="#" class="contact-link">
+              <span class="contact-link-label">Email directly</span>
+              <span class="contact-link-arrow">↗</span>
+            </a>
+            <a href="#" class="contact-link">
+              <span class="contact-link-label">RSS Feed</span>
+              <span class="contact-link-arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: SIDEBAR -->
+    <div class="about-sidebar">
+
+      <!-- CURRENTLY -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">◈ Currently</span>
+        </div>
+        <div class="widget-body">
+          <div class="currently-item">
+            <span class="currently-icon">🎮</span>
+            <div class="currently-info">
+              <div class="currently-type">Playing</div>
+              <div class="currently-title">Hollow Knight: Silksong</div>
+              <div class="currently-sub">~18hrs in · Hornet's Story</div>
+            </div>
+            <span class="currently-badge badge-playing">Active</span>
+          </div>
+          <div class="currently-item">
+            <span class="currently-icon">📎</span>
+            <div class="currently-info">
+              <div class="currently-type">Watching</div>
+              <div class="currently-title">Severance — S3</div>
+              <div class="currently-sub">Apple TV+ · Episode 7</div>
+            </div>
+            <span class="currently-badge badge-watching">Active</span>
+          </div>
+          <div class="currently-item">
+            <span class="currently-icon">📖</span>
+            <div class="currently-info">
+              <div class="currently-type">Reading</div>
+              <div class="currently-title">Blindsight</div>
+              <div class="currently-sub">Peter Watts · p. 214</div>
+            </div>
+            <span class="currently-badge badge-reading">Active</span>
+          </div>
+          <div class="currently-item">
+            <span class="currently-icon">🎮</span>
+            <div class="currently-info">
+              <div class="currently-type">Backlog</div>
+              <div class="currently-title">Baldur's Gate 3</div>
+              <div class="currently-sub">Staring at me. Judging.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2026 STATS -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">◈ 2026 Stats</span>
+        </div>
+        <div class="widget-body">
+          <div class="stats-grid" style="margin-bottom:1rem">
+            <div class="stat-cell"><div class="stat-num">31</div><div class="stat-label">Films</div></div>
+            <div class="stat-cell"><div class="stat-num">148</div><div class="stat-label">TV Eps</div></div>
+            <div class="stat-cell"><div class="stat-num">12</div><div class="stat-label">Books</div></div>
+            <div class="stat-cell"><div class="stat-num">7</div><div class="stat-label">Games</div></div>
+          </div>
+          <div>
+            <div class="year-bar-item">
+              <div class="year-bar-label"><span class="year-bar-name">Films</span><span class="year-bar-val">31 / 60</span></div>
+              <div class="year-bar-track"><div class="year-bar-fill" style="width:52%;background:var(--film)"></div></div>
+            </div>
+            <div class="year-bar-item">
+              <div class="year-bar-label"><span class="year-bar-name">TV Eps</span><span class="year-bar-val">148 / 300</span></div>
+              <div class="year-bar-track"><div class="year-bar-fill" style="width:49%;background:var(--tv)"></div></div>
+            </div>
+            <div class="year-bar-item">
+              <div class="year-bar-label"><span class="year-bar-name">Books</span><span class="year-bar-val">12 / 24</span></div>
+              <div class="year-bar-track"><div class="year-bar-fill" style="width:50%;background:var(--books)"></div></div>
+            </div>
+            <div class="year-bar-item">
+              <div class="year-bar-label"><span class="year-bar-name">Games</span><span class="year-bar-val">7 / 20</span></div>
+              <div class="year-bar-track"><div class="year-bar-fill" style="width:35%;background:var(--games)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETUP -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">◈ The Setup</span>
+        </div>
+        <div class="widget-body" style="font-size:0.88rem;">
+          <div style="display:flex;flex-direction:column;gap:0.6rem;">
+            <div style="display:flex;justify-content:space-between;padding-bottom:0.6rem;border-bottom:1px solid var(--border)">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text4);text-transform:uppercase;letter-spacing:0.1em">PC</span>
+              <span style="font-size:0.85rem;color:var(--text2)">Ryzen 9 / RTX 4080</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:0.6rem;border-bottom:1px solid var(--border)">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text4);text-transform:uppercase;letter-spacing:0.1em">Monitor</span>
+              <span style="font-size:0.85rem;color:var(--text2)">LG 27" OLED 240Hz</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:0.6rem;border-bottom:1px solid var(--border)">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text4);text-transform:uppercase;letter-spacing:0.1em">Console</span>
+              <span style="font-size:0.85rem;color:var(--text2)">PS5 (slim)</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:0.6rem;border-bottom:1px solid var(--border)">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text4);text-transform:uppercase;letter-spacing:0.1em">Headset</span>
+              <span style="font-size:0.85rem;color:var(--text2)">Sennheiser HD 560S</span>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text4);text-transform:uppercase;letter-spacing:0.1em">Chair</span>
+              <span style="font-size:0.85rem;color:var(--text2)">Secretlab Titan</span>
+            </div>
+          </div>
+          <div style="margin-top:0.9rem;padding-top:0.9rem;border-top:1px solid var(--border)">
+            <a href="blog.html" style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--purple3);letter-spacing:0.08em">Full setup post ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <span>VOIDLOG</span> — A personal gaming &amp; media journal · Built with obsession ·
+  <a href="#" style="color:var(--text4)">RSS</a>
+</footer>
+
+</body>
+</html>

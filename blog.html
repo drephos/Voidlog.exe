@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOIDLOG — Gaming & Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a080f;
+    --bg2: #120e1c;
+    --bg3: #1a1428;
+    --surface: #1e1830;
+    --surface2: #251f3a;
+    --border: #2e2650;
+    --border2: #3d3368;
+    --purple: #a855f7;
+    --purple2: #7c3aed;
+    --purple3: #c084fc;
+    --purple-dim: #6b21a8;
+    --accent: #e879f9;
+    --accent2: #f0abfc;
+    --text: #f1eef9;
+    --text2: #c4b8e8;
+    --text3: #8b7db0;
+    --text4: #5c5180;
+    --film: #a78bfa;
+    --tv: #60a5fa;
+    --games: #34d399;
+    --books: #f59e0b;
+    --tech: #f472b6;
+    --scanline: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(168,85,247,0.015) 2px, rgba(168,85,247,0.015) 4px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    min-height: 100vh;
+    background-image: var(--scanline);
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  a { color: var(--purple3); text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,8,15,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+  }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: 2rem;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.15em;
+    color: var(--text);
+    position: relative;
+  }
+  .logo span {
+    color: var(--purple);
+  }
+  .logo-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--text3);
+    letter-spacing: 0.3em;
+    display: block;
+    margin-top: -6px;
+    text-transform: uppercase;
+  }
+  nav { display: flex; gap: 0.25rem; }
+  nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover, nav a.active {
+    color: var(--purple3);
+    border-color: var(--border2);
+    background: var(--surface);
+  }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+  }
+  .search-box input {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text2);
+    width: 160px;
+  }
+  .search-box input::placeholder { color: var(--text4); }
+  .search-icon { color: var(--text4); font-size: 0.9rem; }
+
+  /* LAYOUT */
+  .layout {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO */
+  .hero {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 60%, rgba(124,58,237,0.08) 100%);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(232,121,249,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .hero-label::before { content: '▶'; font-size: 0.5rem; }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.8rem;
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--purple);
+    text-shadow: 0 0 30px rgba(168,85,247,0.5);
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text3);
+  }
+  .hero-date { color: var(--text4); }
+  .hero-excerpt {
+    font-size: 1.1rem;
+    color: var(--text2);
+    font-style: italic;
+    line-height: 1.7;
+  }
+  .hero-img {
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    aspect-ratio: 16/10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    letter-spacing: 0.1em;
+    color: var(--border2);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(168,85,247,0.1));
+  }
+  .read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: var(--purple2);
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    border: 1px solid var(--purple);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .read-more-btn:hover {
+    background: var(--purple);
+    color: white;
+    box-shadow: 0 0 20px rgba(168,85,247,0.4);
+  }
+
+  /* TAG PILLS */
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .tag-film    { background: rgba(167,139,250,0.12); color: var(--film);  border: 1px solid rgba(167,139,250,0.25); }
+  .tag-tv      { background: rgba(96,165,250,0.12);  color: var(--tv);    border: 1px solid rgba(96,165,250,0.25); }
+  .tag-games   { background: rgba(52,211,153,0.12);  color: var(--games); border: 1px solid rgba(52,211,153,0.25); }
+  .tag-books   { background: rgba(245,158,11,0.12);  color: var(--books); border: 1px solid rgba(245,158,11,0.25); }
+  .tag-tech    { background: rgba(244,114,182,0.12); color: var(--tech);  border: 1px solid rgba(244,114,182,0.25); }
+
+  .tag:hover { filter: brightness(1.3); }
+  .tag.active { filter: brightness(1.2); }
+  .tag-film.active    { background: rgba(167,139,250,0.28); }
+  .tag-tv.active      { background: rgba(96,165,250,0.28); }
+  .tag-games.active   { background: rgba(52,211,153,0.28); }
+  .tag-books.active   { background: rgba(245,158,11,0.28); }
+  .tag-tech.active    { background: rgba(244,114,182,0.28); }
+
+  /* TAG FILTER BAR */
+  .tag-bar {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .tag-bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text4);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-right: 0.25rem;
+  }
+
+  /* MAIN FEED */
+  .feed { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .post-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .post-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.2s;
+  }
+  .post-card:hover {
+    border-color: var(--border2);
+    background: var(--bg3);
+  }
+  .post-card[data-tag="Film"]:hover::before    { background: var(--film); }
+  .post-card[data-tag="TV"]:hover::before      { background: var(--tv); }
+  .post-card[data-tag="Games"]:hover::before   { background: var(--games); }
+  .post-card[data-tag="Books"]:hover::before   { background: var(--books); }
+  .post-card[data-tag="Tech"]:hover::before    { background: var(--tech); }
+
+  .post-tags { display: flex; gap: 0.4rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .post-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .post-excerpt {
+    font-size: 0.95rem;
+    color: var(--text3);
+    font-style: italic;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text4);
+  }
+  .post-meta .dot { color: var(--border2); }
+  .post-thumb {
+    width: 90px;
+    height: 90px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+  .widget {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .widget-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+  }
+  .widget-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .widget-icon { font-size: 0.8rem; }
+  .widget-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .widget-link:hover { color: var(--purple3); }
+  .widget-body { padding: 1rem 1.25rem; }
+
+  /* ABOUT WIDGET */
+  .about-avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 0 20px rgba(168,85,247,0.35);
+  }
+  .about-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+  }
+  .about-bio {
+    font-size: 0.9rem;
+    color: var(--text3);
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .social-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .social-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .social-link:hover { color: var(--purple3); border-color: var(--border2); background: var(--surface); }
+
+  /* TRAKT WIDGET */
+  .trakt-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .trakt-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .trakt-poster {
+    width: 36px; height: 50px;
+    background: var(--surface2);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .trakt-info { flex: 1; min-width: 0; }
+  .trakt-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+  }
+  .trakt-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text4);
+    margin-top: 0.15rem;
+  }
+  .trakt-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .trakt-type-film { background: rgba(167,139,250,0.15); color: var(--film); }
+  .trakt-type-tv   { background: rgba(96,165,250,0.15);  color: var(--tv); }
+
+  .trakt-connect {
+    text-align: center;
+    padding: 1.5rem;
+  }
+  .trakt-connect p {
+    font-size: 0.85rem;
+    color: var(--text3);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .btn-trakt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ed1c24;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-trakt:hover { background: #ff2d35; box-shadow: 0 0 16px rgba(237,28,36,0.4); }
+
+  /* SPOTIFY WIDGET */
+  .now-playing {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.75rem;
+  }
+  .album-art {
+    width: 48px; height: 48px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #1DB954, #127340);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .now-playing-info { flex: 1; min-width: 0; }
+  .now-playing-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #1DB954;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .pulse {
+    width: 6px; height: 6px;
+    background: #1DB954;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+  .track-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .track-artist {
+    font-size: 0.78rem;
+    color: var(--text3);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .progress-bar {
+    height: 3px;
+    background: var(--surface2);
+    border-radius: 2px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #1DB954;
+    border-radius: 2px;
+    width: 42%;
+    transition: width 1s linear;
+  }
+  .recent-tracks { display: flex; flex-direction: column; gap: 0; }
+  .recent-track {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(46,38,80,0.5);
+  }
+  .recent-track:last-child { border-bottom: none; }
+  .track-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text4);
+    width: 14px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .mini-art {
+    width: 30px; height: 30px;
+    border-radius: 4px;
+    background: var(--surface2);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+  }
+  .recent-track-info { flex: 1; min-width: 0; }
+  .recent-track-name {
+    font-size: 0.82rem;
+    color: var(--text2);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .recent-track-artist {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text4);
+  }
+
+  .spotify-connect { text-align: center; padding: 1rem 0; }
+  .btn-spotify {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: #1DB954; color: #000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.5rem 1rem; border-radius: 20px; border: none;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-spotify:hover { background: #1ed760; box-shadow: 0 0 16px rgba(29,185,84,0.4); }
+
+  /* STATS WIDGET */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .stat-cell {
+    background: var(--surface);
+    border-radius: 6px;
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--purple3);
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text4);
+    margin-top: 0.2rem;
+  }
+
+  /* HIDDEN STATE for filtering */
+  .post-card.hidden { display: none; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text4);
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+  footer span { color: var(--purple); }
+
+
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-img { display: none; }
+    .tag-bar { grid-column: 1; }
+  }
+  @media (max-width: 600px) {
+    .header-inner { padding: 0; }
+    .search-box { display: none; }
+    nav a { padding: 0.3rem 0.4rem; }
+    .hero h1 { font-size: 2.8rem; }
+    .layout { padding: 1.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span>VOIDLOG</span>
+      <span class="logo-sub">Gaming &amp; Media Journal</span>
+    </div>
+    <nav>
+      <a href="blog.html" class="active">Home</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="lists.html">Lists</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" placeholder="Search posts...">
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-label">Featured Post</div>
+      <h1>Elden Ring:<br><em>Two Years</em><br>Later</h1>
+      <div class="post-tags">
+        <span class="tag tag-games">● Games</span>
+        <span class="tag tag-tech">● Tech</span>
+      </div>
+      <p class="hero-excerpt">FromSoftware's masterpiece still holds up — and the Shadow of the Erdtree expansion only deepened the obsession. A personal retrospective on 400+ hours in the Lands Between.</p>
+      <div class="hero-meta">
+        <span class="hero-date">12 April 2026</span>
+        <span class="dot">·</span>
+        <span>8 min read</span>
+      </div>
+      <button class="read-more-btn">Read Post ↗</button>
+    </div>
+    <div class="hero-img">ELDEN<br>RING</div>
+  </div>
+
+  <!-- TAG FILTER BAR -->
+  <div class="tag-bar">
+    <span class="tag-bar-label">Filter:</span>
+    <span class="tag tag-film" onclick="filterPosts('Film', this)">● Film</span>
+    <span class="tag tag-tv" onclick="filterPosts('TV', this)">● TV</span>
+    <span class="tag tag-games" onclick="filterPosts('Games', this)">● Games</span>
+    <span class="tag tag-books" onclick="filterPosts('Books', this)">● Books</span>
+    <span class="tag tag-tech" onclick="filterPosts('Tech', this)">● Tech</span>
+  </div>
+
+  <!-- MAIN FEED -->
+  <main>
+    <div class="feed" id="feed">
+
+      <article class="post-card" data-tag="Film">
+        <div>
+          <div class="post-tags">
+            <span class="tag tag-film">● Film</span>
+          </div>
+          <div class="post-title">Dune Part Three Is Everything I Hoped For</div>
+          <p class="post-excerpt">Villeneuve sticks the landing on the most ambitious sci-fi trilogy since the original Star Wars. The spice must flow, and so does this review.</p>
+          <div class="post-meta">
+            <span>8 April 2026</span>
+            <span class="dot">·</span>
+            <span>6 min read</span>
+            <span class="dot">·</span>
+            <span>★ 9/10</span>
+          </div>
+        </div>
+        <div class="post-thumb">🏜️</div>
+      </article>
+
+      <article class="post-card" data-tag="TV">
+        <div>
+          <div class="post-tags">
+            <span class="tag tag-tv">● TV</span>
+          </div>
+          <div class="post-title">Severance S3 — The Mystery Deepens</div>
+          <p class="post-excerpt">Apple TV+'s strangest show returns, and this season it's asking bigger questions about identity, memory, and corporate horror than ever before.</p>
+          <div class="post-meta">
+            <span>2 April 2026</span>
+            <span class="dot">·</span>
+            <span>5 min read</span>
+            <span class="dot">·</span>
+            <span>★ 10/10</span>
+          </div>
+        </div>
+        <div class="post-thumb">🖥️</div>
+      </article>
+
+      <article class="post-card" data-tag="Books">
+        <div>
+          <div class="post-tags">
+            <span class="tag tag-books">● Books</span>
+          </div>
+          <div class="post-title">Monthly Reading Wrap-Up: March 2026</div>
+          <p class="post-excerpt">Six books, two DNFs, and one absolute revelation. This month's sci-fi binge got out of hand — in the best possible way.</p>
+          <div class="post-meta">
+            <span>31 March 2026</span>
+            <span class="dot">·</span>
+            <span>4 min read</span>
+          </div>
+        </div>
+        <div class="post-thumb">📚</div>
+      </article>
+
+      <article class="post-card" data-tag="Tech">
+        <div>
+          <div class="post-tags">
+            <span class="tag tag-tech">● Tech</span>
+          </div>
+          <div class="post-title">My 2026 Gaming Setup — The Refresh</div>
+          <p class="post-excerpt">New monitor, new chair, new lighting situation. A detailed breakdown of what I'm running, what's worth it, and what I'd skip if I was doing it again.</p>
+          <div class="post-meta">
+            <span>24 March 2026</span>
+            <span class="dot">·</span>
+            <span>7 min read</span>
+          </div>
+        </div>
+        <div class="post-thumb">💻</div>
+      </article>
+
+      <article class="post-card" data-tag="Games">
+        <div>
+          <div class="post-tags">
+            <span class="tag tag-games">● Games</span>
+            <span class="tag tag-film">● Film</span>
+          </div>
+          <div class="post-title">Death Stranding 2: A Walking Simulator for the Soul</div>
+          <p class="post-excerpt">Kojima does it again — a game that's equal parts pretentious and profound. If you can accept the pace, you'll find something genuinely moving here.</p>
+          <div class="post-meta">
+            <span>18 March 2026</span>
+            <span class="dot">·</span>
+            <span>9 min read</span>
+            <span class="dot">·</span>
+            <span>★ 8/10</span>
+          </div>
+        </div>
+        <div class="post-thumb">🎮</div>
+      </article>
+
+      <article class="post-card" data-tag="Film">
+        <div>
+          <div class="post-tags">
+            <span class="tag tag-film">● Film</span>
+          </div>
+          <div class="post-title">A24's Quiet Run — 5 Underseen Films You Need</div>
+          <p class="post-excerpt">Forget the prestige titles. Here are five A24 releases that slipped under the radar and absolutely deserve your attention on a Friday night.</p>
+          <div class="post-meta">
+            <span>10 March 2026</span>
+            <span class="dot">·</span>
+            <span>5 min read</span>
+          </div>
+        </div>
+        <div class="post-thumb">🎬</div>
+      </article>
+
+      <article class="post-card" data-tag="TV">
+        <div>
+          <div class="post-tags">
+            <span class="tag tag-tv">● TV</span>
+            <span class="tag tag-books">● Books</span>
+          </div>
+          <div class="post-title">The Expanse Rewatch — Better the Second Time</div>
+          <p class="post-excerpt">Going back to the belt with fresh eyes. Everything I missed the first time around, and why the show's politics hit differently now.</p>
+          <div class="post-meta">
+            <span>2 March 2026</span>
+            <span class="dot">·</span>
+            <span>6 min read</span>
+          </div>
+        </div>
+        <div class="post-thumb">🚀</div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- ABOUT -->
+    <div class="widget">
+      <div class="widget-header">
+        <span class="widget-title"><span class="widget-icon">◈</span> About</span>
+      </div>
+      <div class="widget-body">
+        <div class="about-avatar">VX</div>
+        <div class="about-name">VOID.EXE</div>
+        <p class="about-bio">Somewhere in the UK, slowly working through a backlog that will never end. Writing about games, films, TV, and books since it helps me remember why I love them.</p>
+        <div class="social-links">
+          <a href="#" class="social-link">Letterboxd</a>
+          <a href="#" class="social-link">Backloggd</a>
+          <a href="#" class="social-link">RSS</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRAKT -->
+    <div class="widget">
+      <div class="widget-header">
+        <span class="widget-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:middle">
+            <circle cx="12" cy="12" r="10" fill="#ed1c24"/>
+            <path d="M7 12l3.5 3.5L17 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Trakt — Recently Watched
+        </span>
+        <a href="#" class="widget-link" id="trakt-link">Connect ↗</a>
+      </div>
+      <div class="widget-body" id="trakt-body">
+        <div id="trakt-demo">
+          <div class="trakt-item">
+            <div class="trakt-poster">🏜️</div>
+            <div class="trakt-info">
+              <div class="trakt-title">Dune: Part Three</div>
+              <div class="trakt-meta">2026 · watched 8 Apr</div>
+            </div>
+            <span class="trakt-type trakt-type-film">Film</span>
+          </div>
+          <div class="trakt-item">
+            <div class="trakt-poster">📎</div>
+            <div class="trakt-info">
+              <div class="trakt-title">Severance — S3 E6</div>
+              <div class="trakt-meta">2026 · watched 5 Apr</div>
+            </div>
+            <span class="trakt-type trakt-type-tv">TV</span>
+          </div>
+          <div class="trakt-item">
+            <div class="trakt-poster">🌌</div>
+            <div class="trakt-info">
+              <div class="trakt-title">Interstellar</div>
+              <div class="trakt-meta">2014 · rewatch 1 Apr</div>
+            </div>
+            <span class="trakt-type trakt-type-film">Film</span>
+          </div>
+          <div class="trakt-item">
+            <div class="trakt-poster">🚀</div>
+            <div class="trakt-info">
+              <div class="trakt-title">The Expanse — S4 E7</div>
+              <div class="trakt-meta">2019 · rewatch 28 Mar</div>
+            </div>
+            <span class="trakt-type trakt-type-tv">TV</span>
+          </div>
+        </div>
+        <div id="trakt-connect" style="display:none">
+          <div class="trakt-connect">
+            <p>Connect your Trakt account to show your recently watched films & TV.</p>
+            <button class="btn-trakt" onclick="connectTrakt()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10"/><path d="M7 12l3.5 3.5L17 9" stroke="#ed1c24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Connect Trakt
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPOTIFY -->
+    <div class="widget">
+      <div class="widget-header">
+        <span class="widget-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DB954" style="vertical-align:middle">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 15.5c2.5-1 5.5-1 8 0M7 12.5c3-1.3 7-1.3 10 0M8 9.5c2.5-.8 5.5-.8 8 0" stroke="black" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+          Spotify — Now Playing
+        </span>
+        <a href="#" class="widget-link" id="spotify-link">Connect ↗</a>
+      </div>
+      <div class="widget-body" id="spotify-body">
+        <div id="spotify-demo">
+          <div class="now-playing">
+            <div class="album-art">🎵</div>
+            <div class="now-playing-info">
+              <div class="now-playing-label"><div class="pulse"></div> Now Playing</div>
+              <div class="track-name">Crystallized</div>
+              <div class="track-artist">The xx</div>
+            </div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+          <div class="recent-tracks">
+            <div class="recent-track">
+              <span class="track-num">1</span>
+              <div class="mini-art">🎵</div>
+              <div class="recent-track-info">
+                <div class="recent-track-name">Intro</div>
+                <div class="recent-track-artist">The xx</div>
+              </div>
+            </div>
+            <div class="recent-track">
+              <span class="track-num">2</span>
+              <div class="mini-art">🎵</div>
+              <div class="recent-track-info">
+                <div class="recent-track-name">Midnight City</div>
+                <div class="recent-track-artist">M83</div>
+              </div>
+            </div>
+            <div class="recent-track">
+              <span class="track-num">3</span>
+              <div class="mini-art">🎵</div>
+              <div class="recent-track-info">
+                <div class="recent-track-name">The Night Will Always Win</div>
+                <div class="recent-track-artist">Manchester Orchestra</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="spotify-connect" style="display:none">
+          <div class="spotify-connect">
+            <p style="font-size:0.85rem;color:var(--text3);font-style:italic;margin-bottom:0.75rem;">Connect Spotify to show what you're listening to.</p>
+            <button class="btn-spotify" onclick="connectSpotify()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="black"><circle cx="12" cy="12" r="10" fill="black"/><path d="M8 15.5c2.5-1 5.5-1 8 0M7 12.5c3-1.3 7-1.3 10 0M8 9.5c2.5-.8 5.5-.8 8 0" stroke="#1DB954" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+              Connect Spotify
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="widget">
+      <div class="widget-header">
+        <span class="widget-title"><span class="widget-icon">◈</span> 2026 Stats</span>
+      </div>
+      <div class="widget-body">
+        <div class="stats-grid">
+          <div class="stat-cell">
+            <div class="stat-num">31</div>
+            <div class="stat-label">Films</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">148</div>
+            <div class="stat-label">TV Eps</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">12</div>
+            <div class="stat-label">Books</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-num">7</div>
+            <div class="stat-label">Games</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+<footer>
+  <span>VOIDLOG</span> — A personal gaming &amp; media journal · Built with obsession ·
+  <a href="#" style="color:var(--text4)">RSS</a>
+</footer>
+
+<script>
+  let activeFilter = null;
+
+  function filterPosts(tag, el) {
+    const tags = document.querySelectorAll('.tag-bar .tag');
+    const cards = document.querySelectorAll('.post-card');
+
+    if (activeFilter === tag) {
+      activeFilter = null;
+      tags.forEach(t => t.classList.remove('active'));
+      cards.forEach(c => c.classList.remove('hidden'));
+      return;
+    }
+
+    activeFilter = tag;
+    tags.forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+
+    cards.forEach(card => {
+      const cardTag = card.getAttribute('data-tag');
+      if (cardTag === tag) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
+  // Spotify progress bar animation
+  let prog = 42;
+  setInterval(() => {
+    prog = Math.min(100, prog + 0.05);
+    const el = document.getElementById('progress');
+    if (el) el.style.width = prog + '%';
+    if (prog >= 100) prog = 0;
+  }, 1000);
+
+  function connectTrakt() {
+    alert('To connect Trakt: register an app at trakt.tv/oauth/applications, then implement the OAuth 2.0 flow with your client ID. Your recently watched items will appear here automatically once connected.');
+  }
+
+  function connectSpotify() {
+    alert('To connect Spotify: register an app at developer.spotify.com, then implement the Authorization Code Flow. Your now-playing and recently played tracks will stream live into this widget.');
+  }
+
+  // Search
+  document.querySelector('.search-box input').addEventListener('input', function(e) {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('.post-card').forEach(card => {
+      const title = card.querySelector('.post-title').textContent.toLowerCase();
+      const excerpt = card.querySelector('.post-excerpt').textContent.toLowerCase();
+      card.classList.toggle('hidden', q.length > 0 && !title.includes(q) && !excerpt.includes(q));
+    });
+  });
+</script>
+</body>
+</html>

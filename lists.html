@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lists — VOIDLOG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a080f; --bg2: #120e1c; --bg3: #1a1428;
+    --surface: #1e1830; --surface2: #251f3a;
+    --border: #2e2650; --border2: #3d3368;
+    --purple: #a855f7; --purple2: #7c3aed; --purple3: #c084fc; --purple-dim: #6b21a8;
+    --accent: #e879f9; --accent2: #f0abfc;
+    --text: #f1eef9; --text2: #c4b8e8; --text3: #8b7db0; --text4: #5c5180;
+    --film: #a78bfa; --tv: #60a5fa; --games: #34d399; --books: #f59e0b; --tech: #f472b6;
+    --scanline: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(168,85,247,0.015) 2px, rgba(168,85,247,0.015) 4px);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Crimson Pro', Georgia, serif; font-size: 18px; line-height: 1.7; min-height: 100vh; background-image: var(--scanline); }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+  a { color: var(--purple3); text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  header { position: sticky; top: 0; z-index: 100; background: rgba(10,8,15,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+  .header-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 2rem; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.15em; color: var(--text); }
+  .logo span { color: var(--purple); }
+  .logo-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: var(--text3); letter-spacing: 0.3em; display: block; margin-top: -6px; text-transform: uppercase; }
+  nav { display: flex; gap: 0.25rem; }
+  nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 0.75rem; border-radius: 4px; border: 1px solid transparent; transition: all 0.2s; }
+  nav a:hover, nav a.active { color: var(--purple3); border-color: var(--border2); background: var(--surface); }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  .search-box { display: flex; align-items: center; gap: 0.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.3rem 0.75rem; }
+  .search-box input { background: none; border: none; outline: none; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text2); width: 160px; }
+  .search-box input::placeholder { color: var(--text4); }
+  .search-icon { color: var(--text4); font-size: 0.9rem; }
+
+  .page-wrap { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem; position: relative; z-index: 1; }
+
+  .page-header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+  .page-header-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+  .page-header-label::before { content: '▶'; font-size: 0.5rem; }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.06em; color: var(--text); line-height: 1; margin-bottom: 0.5rem; }
+  .page-desc { font-size: 1rem; color: var(--text3); font-style: italic; }
+
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.3rem; cursor: pointer; transition: all 0.15s; }
+  .tag-film    { background: rgba(167,139,250,0.12); color: var(--film);  border: 1px solid rgba(167,139,250,0.25); }
+  .tag-tv      { background: rgba(96,165,250,0.12);  color: var(--tv);    border: 1px solid rgba(96,165,250,0.25); }
+  .tag-games   { background: rgba(52,211,153,0.12);  color: var(--games); border: 1px solid rgba(52,211,153,0.25); }
+  .tag-books   { background: rgba(245,158,11,0.12);  color: var(--books); border: 1px solid rgba(245,158,11,0.25); }
+  .tag-tech    { background: rgba(244,114,182,0.12); color: var(--tech);  border: 1px solid rgba(244,114,182,0.25); }
+
+  /* LISTS LAYOUT */
+  .lists-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.75rem; }
+
+  .list-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color 0.2s; }
+  .list-card:hover { border-color: var(--border2); }
+
+  .list-card-header { padding: 1.25rem 1.5rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .list-card-meta { flex: 1; }
+  .list-card-tags { margin-bottom: 0.4rem; display: flex; gap: 0.4rem; }
+  .list-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; line-height: 1.1; color: var(--text); }
+  .list-card-date { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text4); margin-top: 0.3rem; }
+  .list-count { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; color: var(--border2); flex-shrink: 0; }
+
+  .list-items { padding: 0; }
+  .list-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.15s; cursor: pointer; }
+  .list-item:last-child { border-bottom: none; }
+  .list-item:hover { background: var(--bg3); }
+  .list-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; line-height: 1; color: var(--purple); min-width: 28px; }
+  .list-num.dim { color: var(--text4); }
+  .list-item-emoji { font-size: 1.3rem; flex-shrink: 0; }
+  .list-item-info { flex: 1; min-width: 0; }
+  .list-item-title { font-size: 0.95rem; font-weight: 600; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
+  .list-item-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text4); margin-top: 0.1rem; }
+  .list-item-score { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--purple3); flex-shrink: 0; }
+
+  .list-card-footer { padding: 0.75rem 1.5rem; background: var(--surface); display: flex; align-items: center; justify-content: space-between; }
+  .list-footer-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text4); font-style: italic; }
+  .list-footer-link { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--purple3); letter-spacing: 0.05em; }
+  .list-footer-link:hover { color: var(--accent); }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text4); letter-spacing: 0.1em; position: relative; z-index: 1; }
+  footer span { color: var(--purple); }
+
+  @media (max-width: 600px) {
+    .search-box { display: none; }
+    nav a { padding: 0.3rem 0.4rem; }
+    .page-title { font-size: 2.2rem; }
+    .page-wrap { padding: 1.5rem 1rem; }
+    .lists-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="blog.html" class="logo">
+      <span>VOIDLOG</span>
+      <span class="logo-sub">Gaming &amp; Media Journal</span>
+    </a>
+    <nav>
+      <a href="blog.html">Home</a>
+      <a href="reviews.html">Reviews</a>
+      <a href="lists.html" class="active">Lists</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input type="text" placeholder="Search lists...">
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="page-header-label">Curated</div>
+    <div class="page-title">Lists</div>
+    <p class="page-desc">Ranked lists, favourites, recommendations, and the occasional hot take in ranked form.</p>
+  </div>
+
+  <div class="lists-grid">
+
+    <!-- LIST 1 -->
+    <div class="list-card">
+      <div class="list-card-header">
+        <div class="list-card-meta">
+          <div class="list-card-tags"><span class="tag tag-games">● Games</span></div>
+          <div class="list-card-title">Best Games of 2025</div>
+          <div class="list-card-date">Updated Jan 2026</div>
+        </div>
+        <div class="list-count">10</div>
+      </div>
+      <div class="list-items">
+        <div class="list-item"><span class="list-num">1</span><span class="list-item-emoji">🦋</span><div class="list-item-info"><div class="list-item-title">Hollow Knight: Silksong</div><div class="list-item-sub">Team Cherry · Metroidvania</div></div><span class="list-item-score">9.5</span></div>
+        <div class="list-item"><span class="list-num">2</span><span class="list-item-emoji">🎮</span><div class="list-item-info"><div class="list-item-title">Death Stranding 2</div><div class="list-item-sub">Kojima Productions · Action</div></div><span class="list-item-score">8.5</span></div>
+        <div class="list-item"><span class="list-num">3</span><span class="list-item-emoji">🪖</span><div class="list-item-info"><div class="list-item-title">Indiana Jones & The Great Circle</div><div class="list-item-sub">MachineGames · Adventure</div></div><span class="list-item-score">8.0</span></div>
+        <div class="list-item"><span class="list-num dim">4</span><span class="list-item-emoji">🌊</span><div class="list-item-info"><div class="list-item-title">Subnautica 2</div><div class="list-item-sub">Unknown Worlds · Survival</div></div><span class="list-item-score">7.5</span></div>
+        <div class="list-item"><span class="list-num dim">5</span><span class="list-item-emoji">🔫</span><div class="list-item-info"><div class="list-item-title">Black Myth: Wukong</div><div class="list-item-sub">Game Science · Action RPG</div></div><span class="list-item-score">7.0</span></div>
+      </div>
+      <div class="list-card-footer"><span class="list-footer-label">Top 5 shown · 10 total</span><a href="#" class="list-footer-link">See full list ↗</a></div>
+    </div>
+
+    <!-- LIST 2 -->
+    <div class="list-card">
+      <div class="list-card-header">
+        <div class="list-card-meta">
+          <div class="list-card-tags"><span class="tag tag-film">● Film</span></div>
+          <div class="list-card-title">All-Time Favourite Films</div>
+          <div class="list-card-date">Last updated Mar 2026</div>
+        </div>
+        <div class="list-count">25</div>
+      </div>
+      <div class="list-items">
+        <div class="list-item"><span class="list-num">1</span><span class="list-item-emoji">🌌</span><div class="list-item-info"><div class="list-item-title">Interstellar</div><div class="list-item-sub">Christopher Nolan · 2014</div></div></div>
+        <div class="list-item"><span class="list-num">2</span><span class="list-item-emoji">🏔️</span><div class="list-item-info"><div class="list-item-title">The Thing</div><div class="list-item-sub">John Carpenter · 1982</div></div></div>
+        <div class="list-item"><span class="list-num">3</span><span class="list-item-emoji">🕷️</span><div class="list-item-info"><div class="list-item-title">Annihilation</div><div class="list-item-sub">Alex Garland · 2018</div></div></div>
+        <div class="list-item"><span class="list-num dim">4</span><span class="list-item-emoji">🏜️</span><div class="list-item-info"><div class="list-item-title">Dune: Part Two</div><div class="list-item-sub">Denis Villeneuve · 2024</div></div></div>
+        <div class="list-item"><span class="list-num dim">5</span><span class="list-item-emoji">🤖</span><div class="list-item-info"><div class="list-item-title">Ex Machina</div><div class="list-item-sub">Alex Garland · 2014</div></div></div>
+      </div>
+      <div class="list-card-footer"><span class="list-footer-label">Top 5 shown · 25 total</span><a href="#" class="list-footer-link">See full list ↗</a></div>
+    </div>
+
+    <!-- LIST 3 -->
+    <div class="list-card">
+      <div class="list-card-header">
+        <div class="list-card-meta">
+          <div class="list-card-tags"><span class="tag tag-tv">● TV</span></div>
+          <div class="list-card-title">Best TV of the Last Decade</div>
+          <div class="list-card-date">Updated Feb 2026</div>
+        </div>
+        <div class="list-count">15</div>
+      </div>
+      <div class="list-items">
+        <div class="list-item"><span class="list-num">1</span><span class="list-item-emoji">📎</span><div class="list-item-info"><div class="list-item-title">Severance</div><div class="list-item-sub">Apple TV+ · 2022–present</div></div></div>
+        <div class="list-item"><span class="list-num">2</span><span class="list-item-emoji">🚀</span><div class="list-item-info"><div class="list-item-title">The Expanse</div><div class="list-item-sub">Amazon · 2015–2022</div></div></div>
+        <div class="list-item"><span class="list-num">3</span><span class="list-item-emoji">🐎</span><div class="list-item-info"><div class="list-item-title">Slow Horses</div><div class="list-item-sub">Apple TV+ · 2022–present</div></div></div>
+        <div class="list-item"><span class="list-num dim">4</span><span class="list-item-emoji">🧪</span><div class="list-item-info"><div class="list-item-title">The Bear</div><div class="list-item-sub">Disney+ · 2022–present</div></div></div>
+        <div class="list-item"><span class="list-num dim">5</span><span class="list-item-emoji">🌑</span><div class="list-item-info"><div class="list-item-title">Dark</div><div class="list-item-sub">Netflix · 2017–2020</div></div></div>
+      </div>
+      <div class="list-card-footer"><span class="list-footer-label">Top 5 shown · 15 total</span><a href="#" class="list-footer-link">See full list ↗</a></div>
+    </div>
+
+    <!-- LIST 4 -->
+    <div class="list-card">
+      <div class="list-card-header">
+        <div class="list-card-meta">
+          <div class="list-card-tags"><span class="tag tag-books">● Books</span></div>
+          <div class="list-card-title">Essential Sci-Fi Reading</div>
+          <div class="list-card-date">Updated Apr 2026</div>
+        </div>
+        <div class="list-count">12</div>
+      </div>
+      <div class="list-items">
+        <div class="list-item"><span class="list-num">1</span><span class="list-item-emoji">📖</span><div class="list-item-info"><div class="list-item-title">A Fire Upon the Deep</div><div class="list-item-sub">Vernor Vinge · 1992</div></div></div>
+        <div class="list-item"><span class="list-num">2</span><span class="list-item-emoji">📗</span><div class="list-item-info"><div class="list-item-title">Blindsight</div><div class="list-item-sub">Peter Watts · 2006</div></div></div>
+        <div class="list-item"><span class="list-num">3</span><span class="list-item-emoji">📙</span><div class="list-item-info"><div class="list-item-title">The Left Hand of Darkness</div><div class="list-item-sub">Ursula K. Le Guin · 1969</div></div></div>
+        <div class="list-item"><span class="list-num dim">4</span><span class="list-item-emoji">📕</span><div class="list-item-info"><div class="list-item-title">Hyperion</div><div class="list-item-sub">Dan Simmons · 1989</div></div></div>
+        <div class="list-item"><span class="list-num dim">5</span><span class="list-item-emoji">📘</span><div class="list-item-info"><div class="list-item-title">Exhalation</div><div class="list-item-sub">Ted Chiang · 2019</div></div></div>
+      </div>
+      <div class="list-card-footer"><span class="list-footer-label">Top 5 shown · 12 total</span><a href="#" class="list-footer-link">See full list ↗</a></div>
+    </div>
+
+    <!-- LIST 5 -->
+    <div class="list-card">
+      <div class="list-card-header">
+        <div class="list-card-meta">
+          <div class="list-card-tags"><span class="tag tag-games">● Games</span></div>
+          <div class="list-card-title">Biggest Backlogs of Shame</div>
+          <div class="list-card-date">Ongoing · always growing</div>
+        </div>
+        <div class="list-count">∞</div>
+      </div>
+      <div class="list-items">
+        <div class="list-item"><span class="list-num dim">1</span><span class="list-item-emoji">🌊</span><div class="list-item-info"><div class="list-item-title">Baldur's Gate 3</div><div class="list-item-sub">Larian Studios · 100+ hrs needed</div></div></div>
+        <div class="list-item"><span class="list-num dim">2</span><span class="list-item-emoji">🌿</span><div class="list-item-info"><div class="list-item-title">Disco Elysium</div><div class="list-item-sub">ZA/UM · started 3 times</div></div></div>
+        <div class="list-item"><span class="list-num dim">3</span><span class="list-item-emoji">🗡️</span><div class="list-item-info"><div class="list-item-title">Cyberpunk 2077</div><div class="list-item-sub">CD Projekt Red · 60hrs in, stalled</div></div></div>
+        <div class="list-item"><span class="list-num dim">4</span><span class="list-item-emoji">🧊</span><div class="list-item-info"><div class="list-item-title">Alan Wake 2</div><div class="list-item-sub">Remedy · chapter 3</div></div></div>
+        <div class="list-item"><span class="list-num dim">5</span><span class="list-item-emoji">⚙️</span><div class="list-item-info"><div class="list-item-title">Pentiment</div><div class="list-item-sub">Obsidian · unopened</div></div></div>
+      </div>
+      <div class="list-card-footer"><span class="list-footer-label">The guilt is real</span><a href="#" class="list-footer-link">Full backlog ↗</a></div>
+    </div>
+
+    <!-- LIST 6 -->
+    <div class="list-card">
+      <div class="list-card-header">
+        <div class="list-card-meta">
+          <div class="list-card-tags"><span class="tag tag-film">● Film</span><span class="tag tag-tv">● TV</span></div>
+          <div class="list-card-title">Best A24 Films Ranked</div>
+          <div class="list-card-date">Updated Mar 2026</div>
+        </div>
+        <div class="list-count">18</div>
+      </div>
+      <div class="list-items">
+        <div class="list-item"><span class="list-num">1</span><span class="list-item-emoji">🕷️</span><div class="list-item-info"><div class="list-item-title">Annihilation</div><div class="list-item-sub">Alex Garland · 2018</div></div></div>
+        <div class="list-item"><span class="list-num">2</span><span class="list-item-emoji">🐑</span><div class="list-item-info"><div class="list-item-title">Hereditary</div><div class="list-item-sub">Ari Aster · 2018</div></div></div>
+        <div class="list-item"><span class="list-num">3</span><span class="list-item-emoji">🌙</span><div class="list-item-info"><div class="list-item-title">Moonlight</div><div class="list-item-sub">Barry Jenkins · 2016</div></div></div>
+        <div class="list-item"><span class="list-num dim">4</span><span class="list-item-emoji">🐘</span><div class="list-item-info"><div class="list-item-title">The Elephant Whisperers</div><div class="list-item-sub">Kartiki Gonsalves · 2022</div></div></div>
+        <div class="list-item"><span class="list-num dim">5</span><span class="list-item-emoji">🔪</span><div class="list-item-info"><div class="list-item-title">Midsommar</div><div class="list-item-sub">Ari Aster · 2019</div></div></div>
+      </div>
+      <div class="list-card-footer"><span class="list-footer-label">Top 5 shown · 18 total</span><a href="#" class="list-footer-link">See full list ↗</a></div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <span>VOIDLOG</span> — A personal gaming &amp; media journal · Built with obsession ·
+  <a href="#" style="color:var(--text4)">RSS</a>
+</footer>
+
+</body>
+</html>
